@@ -21,6 +21,7 @@ gsap.registerPlugin(ScrollSmoother);
 export default function Home() {
   const spline = useRef<Application>();
   const isSmallWindow = useRef<boolean>(false)
+  let scrollRef = useRef<ScrollSmoother>(null)
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
@@ -31,6 +32,7 @@ export default function Home() {
         ignoreMobileResize: true,
         normalizeScroll: true,
       });
+      scroll.paused(true)
 
       gsap.from("#heading1", {
           opacity: 0,
@@ -47,13 +49,13 @@ export default function Home() {
               let bobastate = isSmallWindow.current ? "boba_bigphone" : "boba_desktop"
               spline.current?.emitEvent("mouseDown", bobastate)
               scroll.paused(true)
-              setTimeout(()=>scroll.paused(false), 1000)
+              setTimeout(()=>scroll.paused(false), 1500)
             },
             onLeaveBack: self => {
               let bobastate = isSmallWindow.current ? "overview_bigphone" : "overview_desktop"
               spline.current?.emitEvent("mouseDown", bobastate)
               scroll.paused(true)
-              setTimeout(()=>scroll.paused(false), 1000)
+              setTimeout(()=>scroll.paused(false), 1500)
             }
           }
       }).to("#heading1", {
@@ -100,7 +102,7 @@ export default function Home() {
     }
     const loading = document.getElementById("loading");
     loading?.classList.add("displaynone")
-    console.log(loading)
+    let previouslyCreatedSmoother = ScrollSmoother.get()?.paused(false); 
   }
 
   return (
