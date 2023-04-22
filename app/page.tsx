@@ -72,7 +72,7 @@ export default function Home() {
             // toggleActions: "play none none reverse",
             scrub: true,
             
-            markers: true,
+            // markers: true,
             onEnter: self =>{
               let bobastate = isSmallWindow.current ? "boba_bigphone" : "boba_desktop"
               spline.current?.emitEvent("mouseDown", bobastate)
@@ -137,7 +137,6 @@ export default function Home() {
   let onSceneLoad = (e:Application) => {
     spline.current = e;
     let width = window.innerWidth;
-    console.log(width)
     if(width < 850){
       isSmallWindow.current = true;
       spline.current?.emitEvent("mouseDown", "overview_bigphone")
