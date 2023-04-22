@@ -25,14 +25,13 @@ export default function Home() {
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
-      let scroll = ScrollSmoother.create({
-        smooth: 1,               
-        effects: true,           
-        smoothTouch: 0,        
-        ignoreMobileResize: true,
-        normalizeScroll: true,
-      });
-      scroll.paused(true)
+      // let scroll = ScrollSmoother.create({
+      //   smooth: 1,               
+      //   effects: true,           
+      //   ignoreMobileResize: false,
+      //   normalizeScroll: true,
+      // });
+      // scroll.paused(true)
 
       gsap.from("#heading1", {
           opacity: 0,
@@ -143,7 +142,7 @@ export default function Home() {
     }
     const loading = document.getElementById("loading");
     loading?.classList.add("displaynone")
-    let previouslyCreatedSmoother = ScrollSmoother.get()?.paused(false); 
+    document.body.classList.remove("noScroll")
   }
 
   return (

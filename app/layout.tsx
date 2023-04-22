@@ -14,7 +14,7 @@
   }) {
     return (
       <html lang="en" className={font.className}>
-        <body>
+        <body className='noScroll'>
           {children}
         </body>
     </html>

@@ -6,6 +6,10 @@
 body {
   display: relative;
 }
+.noScroll {
+  height: 100vh;
+  overflow: hidden;
+}
 #smooth-wrapper {
   pointer-events: none;
 }
