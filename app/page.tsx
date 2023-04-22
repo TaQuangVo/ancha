@@ -26,7 +26,7 @@ export default function Home() {
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
       let scroll = ScrollSmoother.create({
-        smooth: .3,               
+        smooth: 1,               
         effects: true,           
         smoothTouch: 0,        
         ignoreMobileResize: true,
@@ -93,13 +93,13 @@ export default function Home() {
           duration: 1
         }).from("#heading2", {
           opacity: 0,
-          ease: "none",
+          ease: "power2.out",
           y: "60%",
           duration: 1
         },0.5)
         .to("#heading2", {
           opacity: 0,
-          ease: "none",
+          ease: "power2.in",
           y: "-60%",
           duration: 1
         },1.5)
@@ -160,6 +160,7 @@ export default function Home() {
     </div>
     <div id="smooth-wrapper" className={styles.wraper}>
       <div id="smooth-content" className={styles.main}>
+        <div className={styles.padding}></div>
         <div id="margin" className={styles.margin}></div>
         <Livs />
         <div id="playground" className={styles.playground}>
