@@ -7,7 +7,7 @@
   pointer-events: none;
 }
 .margin {
-  height: 120vh;
+  height:160vh;
   width: 100vw;
 }
 .playground {
@@ -26,7 +26,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  pointer-events: all;
 }
 .loading > div {
   display: flex;

@@ -21,7 +21,7 @@ gsap.registerPlugin(ScrollSmoother);
 export default function Home() {
   const spline = useRef<Application>();
   const isSmallWindow = useRef<boolean>(false)
-  let scrollRef = useRef<ScrollSmoother>(null)
+  const loadingRef = useRef<HTMLDivElement>(null)
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
@@ -37,32 +37,73 @@ export default function Home() {
       gsap.from("#heading1", {
           opacity: 0,
       })
-    
-      let tl = gsap.timeline({
+    // 
+    //   let tl = gsap.timeline({
+    //     scrollTrigger: {
+    //         trigger: "#section2",
+    //         start:"top bottom",
+    //         toggleActions: "play none none reverse",
+    //         
+    //         // markers: true,
+    //         onEnter: self =>{
+    //           let bobastate = isSmallWindow.current ? "boba_bigphone" : "boba_desktop"
+    //           spline.current?.emitEvent("mouseDown", bobastate)
+    //           scroll.paused(true)
+    //           setTimeout(()=>scroll.paused(false), 1500)
+    //         },
+    //         onLeaveBack: self => {
+    //           let bobastate = isSmallWindow.current ? "overview_bigphone" : "overview_desktop"
+    //           spline.current?.emitEvent("mouseDown", bobastate)
+    //           scroll.paused(true)
+    //           setTimeout(()=>scroll.paused(false), 1500)
+    //         }
+    //       }
+    //   }).to("#heading1", {
+    //       opacity: 0,
+    //   }).to("#heading2", {
+    //     opacity: 1,
+    //   })
+
+      gsap.timeline({
         scrollTrigger: {
-            trigger: "#section2",
-            start:"top bottom",
-            toggleActions: "play none none reverse",
+            trigger: "#margin",
+            start:"top top",
+            end:"bottom bottom",
+            // toggleActions: "play none none reverse",
+            scrub: true,
             
-            // markers: true,
+            markers: true,
             onEnter: self =>{
               let bobastate = isSmallWindow.current ? "boba_bigphone" : "boba_desktop"
               spline.current?.emitEvent("mouseDown", bobastate)
-              scroll.paused(true)
-              setTimeout(()=>scroll.paused(false), 1500)
+              // scroll.paused(true)
+              // setTimeout(()=>scroll.paused(false), 1500)
             },
             onLeaveBack: self => {
               let bobastate = isSmallWindow.current ? "overview_bigphone" : "overview_desktop"
               spline.current?.emitEvent("mouseDown", bobastate)
-              scroll.paused(true)
-              setTimeout(()=>scroll.paused(false), 1500)
+              // scroll.paused(true)
+              // setTimeout(()=>scroll.paused(false), 1500)
             }
           }
       }).to("#heading1", {
           opacity: 0,
-      }).to("#heading2", {
-        opacity: 1,
-      })
+          ease: "none",
+          y: "-60%",
+          duration: 1
+        }).from("#heading2", {
+          opacity: 0,
+          ease: "none",
+          y: "60%",
+          duration: 1
+        },0.5)
+        .to("#heading2", {
+          opacity: 0,
+          ease: "none",
+          y: "-60%",
+          duration: 1
+        },1.5)
+
 
       let tl2 = gsap.timeline({
           scrollTrigger:{
@@ -74,10 +115,12 @@ export default function Home() {
             onEnter: self =>{
               let stafplay = isSmallWindow.current ? "stafplay_bigfone" : "stafplay"
               spline.current?.emitEvent("mouseDown", stafplay)
+              loadingRef.current?.classList.add("noPointerEvent")
             },
             onLeaveBack: self => {
               let baseState = isSmallWindow.current ? "stafbase_phone" : "stafbasestate"
               spline.current?.emitEvent("mouseDown", baseState)
+              loadingRef.current?.classList.remove("noPointerEvent")
             }
           }
         }).to("#heading2", {
@@ -98,7 +141,6 @@ export default function Home() {
     if(width < 850){
       isSmallWindow.current = true;
       spline.current?.emitEvent("mouseDown", "overview_bigphone")
-      console.log("small phone")
     }
     const loading = document.getElementById("loading");
     loading?.classList.add("displaynone")
@@ -110,16 +152,16 @@ export default function Home() {
     <Backgound onSceneLoad={onSceneLoad}/>
     <Hero />
     <Headbar />
-    <div id='loading' className={styles.loading}>
+    <div id='loading' className={styles.loading} ref = {loadingRef}>
       <div>
         <h2>Ancha Huddinge {'<3'}</h2>
         <h2>Bubble tea & asiatiskt livsmedel</h2>
         <ReactLoading className={styles.loadicon}type={'balls'} color={"#000000"}/>
-      </div>
+      </div> 
     </div>
     <div id="smooth-wrapper" className={styles.wraper}>
       <div id="smooth-content" className={styles.main}>
-        <div className={styles.margin}></div>
+        <div id="margin" className={styles.margin}></div>
         <Livs />
         <div id="playground" className={styles.playground}>
         </div>

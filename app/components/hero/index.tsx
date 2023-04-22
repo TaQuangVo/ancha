@@ -11,7 +11,7 @@ const Hero = () => {
           <h3>Hej boba lovers :)</h3>
           <p>Kom och ta en titt, <br/>du kommer garanterat tillbaka!</p>
         </div>
-        <div className={styles.heading2} id="heading2" style={{opacity: "0"}}>
+        <div className={styles.heading2} id="heading2" >
           <p>Brown sugar, genmaicha, slushy matcha
           <br/>oolong, seylon, blended strawberry
           <br/>Och MYCKET mer...
