@@ -1,0 +1,37 @@
+.hero {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0%;
+  top:0%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.hero_content {
+  width: 100%;
+  max-width: 1200px;
+  color: black;
+  opacity: 80%;
+  text-shadow: 1px 1px 4px white;;
+  position: relative;
+  margin-left: 2rem;
+}
+.heading2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.hero_content h3 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+.hero_content p {
+  font-size: 2.8rem;
+}
+@media only screen and (max-width: 850px) {
+.hero_content {
+  transform: translateY(-15vh);
+}
+}

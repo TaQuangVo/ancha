@@ -1,102 +1,122 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+'use client'
 import styles from './page.module.css'
+import Backgound from './components/background'
+import {useLayoutEffect, useRef} from 'react'
+import Livs from './components/livs'
+import Hero from './components/hero'
+import Info from './components/info'
+import Headbar from './components/headbar'
 
-const inter = Inter({ subsets: ['latin'] })
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Application } from '@splinetool/runtime';
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+
+gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollSmoother);
+
 
 export default function Home() {
+  const spline = useRef<Application>();
+  const isSmallWindow = useRef<boolean>(false)
+
+  useLayoutEffect(() => {
+    let ctx = gsap.context(() => {
+      let scroll = ScrollSmoother.create({
+        smooth: .3,               
+        effects: true,           
+        smoothTouch: 0.1,        
+        ignoreMobileResize: true,
+        normalizeScroll: true,
+      });
+
+      gsap.from("#heading1", {
+          opacity: 0,
+      })
+    
+      let tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: "#section2",
+            start:"top bottom",
+            toggleActions: "play none none reverse",
+            
+            markers: true,
+            onEnter: self =>{
+              let bobastate = isSmallWindow.current ? "boba_bigphone" : "boba_desktop"
+              spline.current?.emitEvent("mouseDown", bobastate)
+              scroll.paused(true)
+              setTimeout(()=>scroll.paused(false), 1000)
+            },
+            onLeaveBack: self => {
+              let bobastate = isSmallWindow.current ? "overview_bigphone" : "overview_desktop"
+              spline.current?.emitEvent("mouseDown", bobastate)
+              scroll.paused(true)
+              setTimeout(()=>scroll.paused(false), 1000)
+            }
+          }
+      }).to("#heading1", {
+          opacity: 0,
+      }).to("#heading2", {
+        opacity: 1,
+      })
+
+      let tl2 = gsap.timeline({
+          scrollTrigger:{
+            trigger: "#section2",
+            start:"bottom top",
+            toggleActions: "play none none reverse",
+            
+            markers: true,
+            onEnter: self =>{
+              let stafplay = isSmallWindow.current ? "stafplay_bigfone" : "stafplay"
+              spline.current?.emitEvent("mouseDown", stafplay)
+              scroll.paused(true)
+              setTimeout(()=>scroll.paused(false), 1000)
+            },
+            onLeaveBack: self => {
+              let baseState = isSmallWindow.current ? "stafbase_phone" : "stafbasestate"
+              spline.current?.emitEvent("mouseDown", baseState)
+              scroll.paused(true)
+              setTimeout(()=>scroll.paused(false), 1000)
+            }
+          }
+        }).to("#heading2", {
+        opacity: 0,
+      })
+
+        })
+
+    return () =>  {
+        ctx.revert();
+      }
+  }, []);
+
+  
+  let onSceneLoad = (e:Application) => {
+    spline.current = e;
+    let width = window.innerWidth;
+    console.log(width)
+    if(width < 850){
+      isSmallWindow.current = true;
+      spline.current?.emitEvent("mouseDown", "overview_bigphone")
+      console.log("small phone")
+    }
+  }
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+  <main>
+    <Backgound onSceneLoad={onSceneLoad}/>
+    <Hero />
+    <Headbar />
+    <div id="smooth-wrapper" className={styles.wraper}>
+      <div id="smooth-content" className={styles.main}>
+        <div className={styles.margin}></div>
+        <Livs />
+        <div id="playground" className={styles.playground}>
         </div>
+        <Info />
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
+  </main>
   )
 }

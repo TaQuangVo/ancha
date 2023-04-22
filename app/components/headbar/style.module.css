@@ -1,0 +1,13 @@
+.headbar {
+  position: fixed;
+  top:0;
+  left:0;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+.headbar div{
+  position: relative;
+  width: 8rem;
+  height: 8rem;
+}

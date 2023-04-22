@@ -1,0 +1,95 @@
+.container {
+  background-color: pink;
+  border-radius: 30px;
+  padding: 30px 0px;
+  display: flex;
+  justify-content: center;
+}
+.wraper {
+  width: 1000px;
+  margin:0 2rem;
+}
+.title h2{
+  text-align: center;
+  font-size: 3rem;
+}
+.body {
+   display: flex;
+   flex-direction: column;
+}
+.section {
+  padding-top: 60px;
+  display: flex;
+  margin:auto;
+  width: 100%;
+  justify-content:space-between;
+}
+.content {
+  display: flex;
+  flex-direction: column;
+}
+.content h3 {
+  font-size: 2.7rem;
+}
+.content p {
+  margin-top: 20px;
+  font-size: 2.4rem;
+}
+.images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.image_wraper {
+  border-radius: 20px;
+  overflow: hidden;
+  width: 12rem;
+  height: 12rem;
+  position: relative;
+}
+.fotter p {
+  margin-top: 60px;
+  font-size: 2.4rem;
+  text-align: center;
+}
+
+@media only screen and (max-width: 1000px) {
+.wraper {
+  width: 800px;
+  margin:0 2rem;
+}
+}
+@media only screen and (max-width: 750px) {
+.wraper {
+  width: 600px;
+  margin:0 2rem;
+}
+}
+@media only screen and (max-width: 570px) {
+.wraper {
+  width: 600px;
+  margin:0 2rem;
+}
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+  margin:auto;
+  width: 100%;
+  text-align: center;
+}
+.images {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: 16rem 16rem;
+  gap: 1rem;
+}
+.image_wraper {
+  border-radius: 10px;
+  overflow: hidden;
+  width: 16rem;
+  height: 16rem;
+  position: relative;
+}
+}
